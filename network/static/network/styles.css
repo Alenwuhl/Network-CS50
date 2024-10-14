@@ -1,0 +1,55 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.pagination {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.pagination-link {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #007bff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.pagination-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #555;
+}
+.edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 123, 255, 0.7); 
+    border: none;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.edit-button i {
+    font-size: 1.2rem;
+}
+
+.edit-button:hover {
+    background-color: rgba(0, 123, 255, 1);
+}

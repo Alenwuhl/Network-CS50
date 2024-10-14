@@ -1,0 +1,66 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-primary">All Posts</h2>
+    <hr class="mb-4">
+
+    {% for post in page_obj %}
+    <div class="card mb-4 shadow-sm border-0 position-relative">
+        <div class="card-body">
+            {% if user == post.user %}
+                <button class="edit-button" onclick="editPost({{ post.id }})">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+            {% endif %}
+            <h5 class="card-title">
+                <a href="{% url 'profile' post.user.username %}" class="text-decoration-none text-dark">
+                    <strong>{{ post.user.username }}</strong>
+                </a>
+            </h5>
+
+            <p class="card-text" id="post-content-{{ post.id }}">{{ post.content }}</p>
+
+            <textarea class="form-control mb-3" id="edit-area-{{ post.id }}" style="display: none;"></textarea>
+
+            <button class="btn btn-success mb-3" id="save-button-{{ post.id }}" style="display: none;" onclick="savePost({{ post.id }})">Save</button>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <button class="btn btn-link text-danger p-0" style="font-size: 1.5rem;" 
+                            id="like-button-{{ post.id }}" 
+                            onclick="toggleLike({{ post.id }})">
+                        {% if user in post.likes.all %}
+                            <i class="fas fa-heart"></i>
+                        {% else %}
+                            <i class="far fa-heart"></i> 
+                        {% endif %}
+                    </button>
+
+                    <span class="ml-2" id="like-count-{{ post.id }}">{{ post.likes.count }} Likes</span>
+                </div>
+
+                <small class="text-muted">Posted on {{ post.timestamp|date:"F j, Y, g:i a" }}</small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="pagination-container">
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" class="pagination-link">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">Previous</a>
+        {% endif %}
+
+        <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">Last</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

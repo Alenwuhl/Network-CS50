@@ -1,0 +1,40 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-primary">Following</h2>
+    <hr class="mb-4">
+
+    {% for post in page_obj %}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.user.username }}</h5>
+                <p class="card-text">{{ post.content }}</p>
+                <p class="text-muted">
+                    <small>Posted on {{ post.timestamp|date:"F j, Y, g:i a" }}</small>
+                </p>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-info" role="alert">
+            No posts available.
+        </div>
+    {% endfor %}
+
+    <div class="pagination-container">
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="pagination-link">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">Previous</a>
+            {% endif %}
+
+            <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">Last</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
